@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5A7AD0562C92062A00FAFF76 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7AD0552C92062A00FAFF76 /* FollowerCell.swift */; };
 		5A7AD0582C92073C00FAFF76 /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7AD0572C92073C00FAFF76 /* GFAvatarImageView.swift */; };
+		5A7AD05A2C92203C00FAFF76 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7AD0592C92203C00FAFF76 /* UIHelper.swift */; };
 		5A9E6BD02C878E1B002EF198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E6BCF2C878E1B002EF198 /* AppDelegate.swift */; };
 		5A9E6BD22C878E1B002EF198 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E6BD12C878E1B002EF198 /* SceneDelegate.swift */; };
 		5A9E6BD92C878E1B002EF198 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A9E6BD82C878E1B002EF198 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		5A7AD0552C92062A00FAFF76 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		5A7AD0572C92073C00FAFF76 /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
+		5A7AD0592C92203C00FAFF76 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		5A9E6BCC2C878E1B002EF198 /* GitHubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9E6BCF2C878E1B002EF198 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A9E6BD12C878E1B002EF198 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				5ACA8B3F2C8D12C800F709AC /* ErrorMessage.swift */,
+				5A7AD0592C92203C00FAFF76 /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				5A9E6BE42C879555002EF198 /* SearchVC.swift in Sources */,
 				5ABDE0C52C87E20400B886AD /* FollowersListVC.swift in Sources */,
 				5ABDE0CD2C8807C800B886AD /* UIViewController+Ext.swift in Sources */,
+				5A7AD05A2C92203C00FAFF76 /* UIHelper.swift in Sources */,
 				5A7AD0582C92073C00FAFF76 /* GFAvatarImageView.swift in Sources */,
 				5ABDE0C12C87C06F00B886AD /* GFButton.swift in Sources */,
 				5ABDE0CB2C87EB0E00B886AD /* GFAlertVC.swift in Sources */,
