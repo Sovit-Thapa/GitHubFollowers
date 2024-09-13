@@ -35,16 +35,7 @@ class FollowersListVC : UIViewController {
         configureDataSource()
     }
     
-    override func viewWillAppear(_ animated: Bool) {NetworkManager.shared.getFollowers(for: username, page: 1) { result in
-        
-        switch result{
-        case .success(let followers):
-            print("Followrs Count =  \(followers.count)")
-        case .failure(let error):
-            self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "Okay")
-        }
-        
-    }
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -54,6 +45,8 @@ class FollowersListVC : UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.hidesSearchBarWhenScrolling = false
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapper))
+        navigationItem.rightBarButtonItem = addButton
     }
 
     func configureSearchController(){
@@ -115,6 +108,33 @@ class FollowersListVC : UIViewController {
         snapshot.appendItems(followers)
         DispatchQueue.main.async{
             self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+    }
+    
+    @objc func addButtonTapper(){
+        showLoadingView()
+        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+            guard let self = self else { return }
+            self.dismissLoadingView()
+            
+            switch result{
+            case .success(let user):
+                let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
+                    guard let self = self else { return }
+                    guard let error = error else {
+                        self.presentGFAlertOnMainThread(title: "Success", message: "You have successfully added to them in your favorites.🎉", buttonTitle: "Okay")
+                        return
+                    }
+                    
+                    self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
+                }
+                
+                
+                
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
+            }
         }
     }
 }
