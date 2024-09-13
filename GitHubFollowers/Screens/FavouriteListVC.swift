@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavouriteListVC: UIViewController {
+class FavouriteListVC: GFDataLoadingVC {
     
     let tableView = UITableView()
     var favorites: [Follower] = []
@@ -35,6 +35,7 @@ class FavouriteListVC: UIViewController {
         tableView.rowHeight = 80
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.removeExcessCells()
         
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseID)
     }
@@ -45,20 +46,21 @@ class FavouriteListVC: UIViewController {
             
             switch result{
             case .success(let favorites):
-                if favorites.isEmpty{
-                    self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
-                } else {
-                    self.favorites = favorites
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.view.bringSubviewToFront(self.tableView)
-                    }
-                }
-                
+                self.updateUI(with: favorites)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okay")
             }
         }
+    }
+    
+    func updateUI(with favorites: [Follower]){
+        if favorites.isEmpty{
+            self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
+        } else {
+            self.favorites = favorites
+            self.tableView.reloadDataOnMainThread()
+        }
+        
     }
 }
 
@@ -76,7 +78,7 @@ extension FavouriteListVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
-        let destVC = FollowersListVC()
+        let destVC = FollowersListVC(username: favorite.login)
         destVC.username = favorite.login
         destVC.title = favorite.login
         
@@ -86,15 +88,13 @@ extension FavouriteListVC : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
-        let favorite = favorites[indexPath.row]
-        
-        favorites.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
-        
-        PersistenceManager.updateWith(favorite: favorite, actionType: .remove) { [weak self] error in
+        PersistenceManager.updateWith(favorite: favorites[indexPath.row], actionType: .remove) { [weak self] error in
             guard let self = self else { return }
             
-            guard let error = error else { return }
+            guard let error = error else {
+                self.favorites.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .left)
+                return }
             self.presentGFAlertOnMainThread(title: "Unable to remove", message: error.rawValue, buttonTitle: "Okay")
         }
     }
