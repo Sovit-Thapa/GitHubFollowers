@@ -12,10 +12,10 @@ class GFTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().tintColor = .systemGreen
-        viewControllers = [createSearchNC(), createFavouritesNC()]
+        viewControllers = [createSearchVC(), createFavouritesNC()]
     }
     
-    func createSearchNC() ->UINavigationController{
+    func createSearchVC() ->UINavigationController{
         let searchVC = SearchVC()
         searchVC.title = "Search"
         searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
