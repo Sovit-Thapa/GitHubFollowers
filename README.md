@@ -1,6 +1,6 @@
 A app made using GitHub Api.
 
-Screenshots
+Screenshots [Dark Mode]
 
 
 <img width="379" alt="Screenshot 2024-11-10 at 5 20 04 PM" src="https://github.com/user-attachments/assets/7d4bf808-354a-4e1a-8e74-18601e650cd8">
